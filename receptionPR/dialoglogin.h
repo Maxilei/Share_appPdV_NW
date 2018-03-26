@@ -20,6 +20,11 @@ public:
     QString identifiant,nom,prenom;
     QNetworkAccessManager myNWM;
     QNetworkCookieJar cookieJar;
+private slots:
+    void on_pushButtonOk_clicked();
+
+    void on_pushButtonCancel_clicked();
+
 private:
     Ui::DialogLogin *ui;
 };
