@@ -30,62 +30,42 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="labelImageLogin">
+      <widget class="QLabel" name="label">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="labelLogin">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Login</string>
+        <string>TextLabel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditLogin">
-       <property name="maximumSize">
-        <size>
-         <width>235</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Admin</string>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEdit"/>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLabel" name="labelImagePassword">
+      <widget class="QLabel" name="label_4">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="labelPassword">
+      <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Password</string>
+        <string>TextLabel</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditPassword">
-       <property name="maximumSize">
-        <size>
-         <width>235</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Admin</string>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
     </layout>
    </item>
@@ -118,16 +98,12 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonOk">
-       <property name="text">
-        <string>Ok</string>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButtonCancel">
-       <property name="text">
-        <string>Cancel</string>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>
       </widget>
      </item>
@@ -149,5 +125,38 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DialogLogin</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>DialogLogin</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
