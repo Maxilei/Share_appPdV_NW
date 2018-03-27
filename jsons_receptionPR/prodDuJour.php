@@ -1,7 +1,7 @@
-<?
+<?php
 include("mini.php");
 if(isset($_SESSION['login']))
-    $pointRelaisMail = isset($_SESSION['login'];
+    $pointRelaisMail =$_SESSION['login'];
 {   
     //Requete qui ressort les producteurs qui auront une livraison demain
 	$resultat=array();

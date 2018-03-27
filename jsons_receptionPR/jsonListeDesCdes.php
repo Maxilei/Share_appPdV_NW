@@ -1,9 +1,29 @@
-<?
+<?php 
 include("mini.php");
-if(isset($_SESSION['identifiant']))
+if(isset($_SESSION['login']))
+    $pointRelaisMail = $_SESSION['login'];
+	if(isset($_POST['utilisateurID'])){
+		$prodId = $_POST['utilisateurID'];
+	}
 {
 	$resultat=array();
-    $req="select ldc.numero as numeroLDC, dateLivraison,heureRetraitPrevue,pointDeVente.nom as PDV,produit.libelle, ldc.quantite, lot.uniteDeVente, utilisateur.prenom, utilisateur.nom from liste inner join sousListe on sousListe.numeroliste=liste.numeroliste inner join pointDeVente on sousListe.no=pointDeVente.no inner join ldc on ldc.numeroSousListe=sousListe.numeroSousListe inner join lot on ldc.nolot=lot.nolot inner join produit on lot.produit=produit.numero  inner join utilisateur on utilisateur.identifiant=liste.identifiant where datediff(now(),dateLivraison)=-1 and lot.producteur=".$_SESSION['identifiant'];
+    $req="
+    	SELECT lotDescription 
+    	FROM pointRelais  
+    		INNER JOIN LDC  
+    			ON pointRelais.prID=LDC.prID 
+    		INNER JOIN commande 
+    			ON LDC.cmdID=commande.cmdID 
+    		INNER JOIN producteur 
+    			ON LDC.producID=producteur.producID 
+    		INNER JOIN utilisateur 
+    			ON producteur.utilisateurID = utilisateur.utilisateurID 
+    		INNER JOIN lot 
+    			ON LDC.lotID = lot.lotID;
+    	WHERE userRole = 'Prod'
+			AND cmdDateLivraison=CURDATE()
+			AND pointRelais.prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='user7@gmail.com');
+			AND utilisateurID=".$prodId.";";
 	
 	$res=mysqli_query($base,$req);
 	while($tabInfos=mysqli_fetch_assoc($res))
@@ -14,4 +34,26 @@ if(isset($_SESSION['identifiant']))
 }
 else
 print_r($_SESSION);
+
+"
+SELECT  lotDescription, cmdDateLivraison, LDC.qte, uniteMesure.umNom
+FROM pointRelais  
+INNER JOIN LDC  
+ON pointRelais.prID=LDC.prID 
+INNER JOIN commande 
+ON LDC.cmdID=commande.cmdID 
+INNER JOIN producteur 
+ON LDC.producID=producteur.producID 
+INNER JOIN uniteMesure 
+ON lot.umId=uniteMesure.umID
+INNER JOIN utilisateur 
+ON producteur.utilisateurID = utilisateur.utilisateurID 
+INNER JOIN lot 
+ON LDC.lotID = lot.lotID
+WHERE userRole = 'Prod'
+AND cmdDateLivraison=CURDATE()
+AND pointRelais.prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='user7@gmail.com');
+AND utilisateurID=".$prodId.";";
+"
+
 ?>

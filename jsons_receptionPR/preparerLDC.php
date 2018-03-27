@@ -1,6 +1,6 @@
-<?
+<?php
 include("mini.php");
-if(isset($_SESSION['identifiant']))
+if(isset($_SESSION['login']))
 {
 	$numero=$_POST['numeroLDC'];
 	$txtReq="update ldc set prepare=true where numero=$numero";
