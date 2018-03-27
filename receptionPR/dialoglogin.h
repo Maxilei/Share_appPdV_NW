@@ -14,6 +14,16 @@ class DialogLogin : public QDialog
 public:
     explicit DialogLogin(QWidget *parent = 0);
     ~DialogLogin();
+<<<<<<< HEAD
+    QString identifiant,nom,prenom;
+    QNetworkAccessManager myNWM;
+    QNetworkCookieJar cookieJar;
+private slots:
+    void on_pushButtonOk_clicked();
+
+    void on_pushButtonCancel_clicked();
+=======
+>>>>>>> 4d78c2a765b6c59af00abfae8589a4f96fd12b2c
 
 private:
     Ui::DialogLogin *ui;
