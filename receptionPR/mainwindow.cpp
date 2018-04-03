@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString theSurname, QString theIdentifiant,QWidget *parent) :
+MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString theSurname, QString theMail, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -9,7 +9,7 @@ MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString t
     myNWM=pmyNWM;
     name=theName;
     surname=theSurname;
-    id=theIdentifiant;
+    mail=theMail;
     QPushButton *nomDuBouton = new QPushButton("Texte",this);
     nomDuBouton->show();
 

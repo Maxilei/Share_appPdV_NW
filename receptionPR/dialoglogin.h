@@ -15,7 +15,7 @@ class DialogLogin : public QDialog
 public:
     explicit DialogLogin(QWidget *parent = 0);
     ~DialogLogin();
-    QString identifiant,nom,prenom;
+    QString mail,nom,prenom;
     QNetworkAccessManager myNWM;
     QNetworkCookieJar cookieJar;
 private slots:

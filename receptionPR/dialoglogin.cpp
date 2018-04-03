@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QNetworkReply>
-#define URL "http://http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/jsonLogin.php"
+#define URL "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/jsonLogin.php"
 
 
 
@@ -42,7 +42,6 @@ void DialogLogin::on_pushButtonOk_clicked()
         qApp->processEvents();
     }
     QByteArray response_data = reply1->readAll();
-    ui->label_2->setText(response_data);
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
     qDebug()<<jsonResponse.object();
     qDebug()<<jsonResponse.object().count();
@@ -51,7 +50,7 @@ void DialogLogin::on_pushButtonOk_clicked()
         //recupération des infos
         nom=jsonResponse.object()["nom"].toString();
         prenom=jsonResponse.object()["prenom"].toString();
-        identifiant=jsonResponse.object()["identifiant"].toString();
+        mail=jsonResponse.object()["mail"].toString();
         //si c'est bon
         accept();
     }

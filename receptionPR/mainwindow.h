@@ -15,12 +15,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QNetworkAccessManager *pmyNWM,QString theName, QString theSurname, QString theIdentifiant, QWidget *parent = 0 );
+    explicit MainWindow(QNetworkAccessManager *pmyNWM,QString theName, QString theSurname, QString theMail, QWidget *parent = 0 );
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    QString name,surname,id;
+    QString name,surname,mail;
     QNetworkReply *reply;
     QJsonArray jsArray;
     QNetworkAccessManager * myNWM;
