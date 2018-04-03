@@ -44,7 +44,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditLogin"/>
+      <widget class="QLineEdit" name="lineEditLogin">
+       <property name="text">
+        <string>user7@gmail.com</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -65,7 +69,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditPassword"/>
+      <widget class="QLineEdit" name="lineEditPassword">
+       <property name="text">
+        <string>psw7</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

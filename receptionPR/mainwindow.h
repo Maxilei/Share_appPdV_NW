@@ -24,7 +24,9 @@ private:
     QNetworkReply *reply;
     QJsonArray jsArray;
     QNetworkAccessManager * myNWM;
-
+public slots:
+    void afficheLesProducteurs();
+    void afficheLaLivraison();
 };
 
 #endif // MAINWINDOW_H

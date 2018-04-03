@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     dialogLogin.setWindowState(dialogLogin.windowState()|Qt::WindowFullScreen);//or WindowMaximized
     if(dialogLogin.exec()==QDialog::Accepted)
     {
-        MainWindow w(&dialogLogin.myNWM,dialogLogin.nom,dialogLogin.prenom,dialogLogin.identifiant);
+        MainWindow w(&dialogLogin.myNWM,dialogLogin.nom,dialogLogin.prenom,dialogLogin.mail);
         w.show();
         return a.exec();
     }
