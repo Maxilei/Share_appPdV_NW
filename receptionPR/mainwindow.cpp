@@ -1,11 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString theSurname, QString theIdentifiant,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    myNWM=pmyNWM;
+    name=theName;
+    surname=theSurname;
+    id=theIdentifiant;
     QPushButton *nomDuBouton = new QPushButton("Texte",this);
     nomDuBouton->show();
 
