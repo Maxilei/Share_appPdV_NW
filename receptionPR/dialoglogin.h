@@ -2,7 +2,8 @@
 #define DIALOGLOGIN_H
 
 #include <QDialog>
-
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
 namespace Ui {
 class DialogLogin;
 }
