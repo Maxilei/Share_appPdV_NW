@@ -12,6 +12,7 @@
 #include <QNetworkReply>
 #include <QTableWidget>
 #include "boutonproducteur.h"
+#include "boutonclient.h"
 
 MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString theSurname, QString theMail, QWidget *parent) :
     QMainWindow(parent),
@@ -41,8 +42,8 @@ MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString t
     QNetworkRequest requestClient(serviceUrlClient);
     requestClient.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QByteArray postDataClient;
-    reply = myNWM->post(requestClient,postDataClient);
-    connect(reply,SIGNAL(finished()),this,SLOT(afficherLesClients()));
+    replyClient = myNWM->post(requestClient,postDataClient);
+    connect(replyClient,SIGNAL(finished()),this,SLOT(afficherLesClients()));
 
 }
 
@@ -133,7 +134,7 @@ void MainWindow::afficheLaLivraison()
 void MainWindow::afficherLesClients()
 {
     qDebug()<<"void MainWindow::afficheLesClients()";
-    QByteArray response_data = reply->readAll();
+    QByteArray response_data = replyClient->readAll();
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
     jsArray=jsonResponse.array();
@@ -145,13 +146,14 @@ void MainWindow::afficherLesClients()
         QString nomProd = jsArray[boucle].toObject()["userPrenom"].toString()+" "+jsArray[boucle].toObject()["userNom"].toString();
         BoutonClient *nouveauBoutonClient = new BoutonClient(jsArray[boucle].toObject()["utilisateurID"].toString(),nomProd,0);
         nouveauBoutonClient->setText(nomProd);
-        //nouveauBouton->setProperty("idProducteur",jsArray[boucle].toObject()["utilisateurID"].toString());
-        //nouveauBouton->setProperty("isOpen",false);
-        //nouveauBouton->setProperty("adresseTab",NULL);
-        connect(nouveauBoutonClient,SIGNAL(clicked()),this,SLOT(afficheLaLivraison()));
+        connect(nouveauBoutonClient,SIGNAL(clicked()),this,SLOT(afficherCommandeClient()));
         ui->maVerticalLayoutClient->addWidget(nouveauBoutonClient);
         boucle++;
     }
+}
+
+void MainWindow::afficherCommandeClient(){
+
 }
 
 

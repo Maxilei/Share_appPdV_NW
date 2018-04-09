@@ -13,6 +13,12 @@ if(isset($_SESSION['login']) && isset($_POST['utilisateurID']))
         FROM pointRelais
             INNER JOIN commande
                 ON pointRelais.prID=commande.prID
+            INNER JOIN LDC  
+                    ON commande.prID=commande.prID
+            INNER JOIN lot 
+                ON LDC.lotID = lot.lotID
+            INNER JOIN uniteMesure 
+                ON lot.umId=uniteMesure.umId
             INNER JOIN consommateur 
                 ON commande.consID=consommateur.consID
             INNER JOIN utilisateur 

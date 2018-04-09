@@ -22,12 +22,14 @@ private:
     Ui::MainWindow *ui;
     QString name,surname,mail;
     QNetworkReply *reply;
+    QNetworkReply *replyClient;
     QJsonArray jsArray;
     QNetworkAccessManager * myNWM;
 public slots:
     void afficheLesProducteurs();
     void afficheLaLivraison();
     void afficherLesClients();
+    void afficherCommandeClient();
 };
 
 #endif // MAINWINDOW_H

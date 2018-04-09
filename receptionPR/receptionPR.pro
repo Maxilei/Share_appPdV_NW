@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     dialoglogin.cpp \
-    boutonproducteur.cpp
+    boutonproducteur.cpp \
+    boutonclient.cpp
 
 HEADERS  += mainwindow.h \
     dialoglogin.h \
-    boutonproducteur.h
+    boutonproducteur.h \
+    boutonclient.h
 
 FORMS    += mainwindow.ui \
     dialoglogin.ui

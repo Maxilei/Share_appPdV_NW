@@ -17,7 +17,7 @@ QTableWidget* BoutonClient::getTabAdresse()
     return sonTableWidget;
 }
 
-bool BoutonClient::estOuvert()
+bool BoutonClient::isOpen()
 {
     return open;
 }
