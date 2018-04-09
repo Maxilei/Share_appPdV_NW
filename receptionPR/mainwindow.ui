@@ -83,7 +83,7 @@
             <height>251</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3"/>
+          <layout class="QVBoxLayout" name="maVerticalLayoutClient"/>
          </widget>
         </widget>
        </widget>

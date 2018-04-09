@@ -35,14 +35,14 @@ MainWindow::MainWindow(QNetworkAccessManager *pmyNWM, QString theName, QString t
 
 
 
-//    QUrl serviceUrl(URL4);
-//    QUrl donnees;
-//    QUrlQuery query;
-//    QNetworkRequest request(serviceUrl);
-//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-//    QByteArray postData;
-//    reply = myNWM->post(request,postData);
-//    connect(reply,SIGNAL(finished()),this,SLOT(afficherLesClients()));
+    QUrl serviceUrlClient(URL4);
+    QUrl donnees2;
+    QUrlQuery query2;
+    QNetworkRequest requestClient(serviceUrlClient);
+    requestClient.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QByteArray postDataClient;
+    reply = myNWM->post(requestClient,postDataClient);
+    connect(reply,SIGNAL(finished()),this,SLOT(afficherLesClients()));
 
 }
 
@@ -132,7 +132,7 @@ void MainWindow::afficheLaLivraison()
 
 void MainWindow::afficherLesClients()
 {
-    qDebug()<<"void MainWindow::afficheLesProducteurs()";
+    qDebug()<<"void MainWindow::afficheLesClients()";
     QByteArray response_data = reply->readAll();
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
@@ -143,13 +143,13 @@ void MainWindow::afficherLesClients()
     while(boucle < nbLDC)
     {
         QString nomProd = jsArray[boucle].toObject()["userPrenom"].toString()+" "+jsArray[boucle].toObject()["userNom"].toString();
-        BoutonProducteur *nouveauBouton = new BoutonProducteur(jsArray[boucle].toObject()["utilisateurID"].toString(),nomProd,0);
-        nouveauBouton->setText(nomProd);
+        BoutonClient *nouveauBoutonClient = new BoutonClient(jsArray[boucle].toObject()["utilisateurID"].toString(),nomProd,0);
+        nouveauBoutonClient->setText(nomProd);
         //nouveauBouton->setProperty("idProducteur",jsArray[boucle].toObject()["utilisateurID"].toString());
         //nouveauBouton->setProperty("isOpen",false);
         //nouveauBouton->setProperty("adresseTab",NULL);
-        connect(nouveauBouton,SIGNAL(clicked()),this,SLOT(afficheLaLivraison()));
-        ui->maVerticalLayout->addWidget(nouveauBouton);
+        connect(nouveauBoutonClient,SIGNAL(clicked()),this,SLOT(afficheLaLivraison()));
+        ui->maVerticalLayoutClient->addWidget(nouveauBoutonClient);
         boucle++;
     }
 }
