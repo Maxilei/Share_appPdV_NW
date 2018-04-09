@@ -2,7 +2,7 @@
 include("mini.php");
 if(isset($_POST['login'])&&isset($_POST['password']))
 {
-	$req="SELECT userMail, userNom, userPrenom FROM utilisateur WHERE userMail='".$_POST['login']."' and userMdp='".$_POST['password']."' and userRole='PtRl'";
+	$req="SELECT userMail as identifiant, userNom as nom, userPrenom as prenom FROM utilisateur WHERE userMail='".$_POST['login']."' and userMdp='".$_POST['password']."'";
 	$res=mysqli_query($base,$req);
 	$tabInfo=mysqli_fetch_array($res);
 	if(mysqli_num_rows($res)==1)

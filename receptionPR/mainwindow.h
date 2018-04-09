@@ -27,6 +27,7 @@ private:
 public slots:
     void afficheLesProducteurs();
     void afficheLaLivraison();
+    void afficherLesClients();
 };
 
 #endif // MAINWINDOW_H
