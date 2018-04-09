@@ -3,6 +3,7 @@
 #define URL2 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/prodDuJour.php"
 #define URL3 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/listeDesCdes.php"
 #define URL4 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/consommateurDuJour.php"
+#define URL5 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/produitsDeLaCommande.php"
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonArray>
@@ -153,8 +154,59 @@ void MainWindow::afficherLesClients()
 }
 
 void MainWindow::afficherCommandeClient(){
+    BoutonClient* boutonClique=(BoutonClient*) sender();
+    bool estOuvert = boutonClique->isOpen();
+    if(boutonClique->getTabAdresse() != NULL && boutonClique->getTabAdresse()->isHidden() == true ){
+        qDebug()<< "if tab isHidden == true : "<<boutonClique->getTabAdresse()->isHidden();
+        boutonClique->getTabAdresse()->show();
+    }
+    else{if(boutonClique->getTabAdresse() != NULL && boutonClique->getTabAdresse()->isHidden() == false ){
+        qDebug()<< "tab isHidden  == false: "<<boutonClique->getTabAdresse()->isHidden();
+        boutonClique->getTabAdresse()->hide();
+    }}
+    if(!estOuvert){
+        qDebug()<<"void MainWindow::afficherCommandeClient()";
+        QString sonId=boutonClique->getClient();
+        //la suite
+        qDebug()<<"ID du client : " <<sonId;
+        QUrl serviceUrl(URL5);
+        QUrl donnees;
+        QUrlQuery query;
+        query.addQueryItem("utilisateurID",sonId);
+        donnees.setQuery(query);
+        QByteArray postData(donnees.toString(QUrl::RemoveFragment).remove("?").toLatin1());
+        QNetworkRequest request(serviceUrl);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        QNetworkReply *replyClient2 = myNWM->post(request,postData);
+        qDebug() <<"Donnée : "<< donnees;
+        while(!replyClient2->isFinished())
+        {
+            qApp->processEvents();
+        }
+        QByteArray response_data = replyClient2->readAll();
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
+        jsArray=jsonResponse.array();
+        int nbLDC=jsArray.count();
+        qDebug()<<"nombre de produit : " <<nbLDC;
+        qDebug()<<jsArray[0].toObject()["lotDescription"].toString();
 
-}
+        QTableWidget *nouvelleTable = new QTableWidget(nbLDC,4  ,this);
+        boutonClique->setTableWidget(nouvelleTable);
+        //boutonClique->setProperty("adresseTab",QBitArray(nouvelleTable));
+        nouvelleTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Produit"));
+        nouvelleTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Quantité"));
+        nouvelleTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Mesure"));
+        int ligne=0;
+        while(ligne < nbLDC)
+        {
+        //    nouvelleTable->setItem(ligne,0,);
+            nouvelleTable->setItem(ligne,1,new QTableWidgetItem(jsArray[ligne].toObject()["lotDescription"].toString()));
+            nouvelleTable->setItem(ligne,2,new QTableWidgetItem(jsArray[ligne].toObject()["qte"].toString()));
+            nouvelleTable->setItem(ligne,3,new QTableWidgetItem(jsArray[ligne].toObject()["umNom"].toString()));
+            ligne++;
+        }
+        ui->maVerticalLayoutClient->addWidget(nouvelleTable);
+    }}
 
 
 

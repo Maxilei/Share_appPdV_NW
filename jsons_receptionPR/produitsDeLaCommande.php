@@ -1,7 +1,9 @@
 <?php
 include("mini.php");
-$_SESSION['login']=$_GET['login'];
-$_POST['utilisateurID']=$_GET['userId'];
+if(isset($_GET['login']) && isset($_GET['utilisateurID'])){
+    $_SESSION['login']=$_GET['login'];
+    $_POST['utilisateurID']=$_GET['utilisateurID'];
+}
 if(isset($_SESSION['login']) && isset($_POST['utilisateurID']))
 {   
     $consommateurId = $_POST['utilisateurID'];
@@ -26,9 +28,8 @@ if(isset($_SESSION['login']) && isset($_POST['utilisateurID']))
         WHERE userRole = 'Cons'
             AND utilisateur.utilisateurID = '".$consommateurId."'
             AND cmdDateLivraison='2018-03-27'
-            AND pointRelais.prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')
-        GROUP BY utilisateur.utilisateurID";
-        echo $req;
+            AND pointRelais.prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')";
+        //echo $req;
 	$res=mysqli_query($base,$req);
 	while($tabInfos=mysqli_fetch_assoc($res))
 	{
