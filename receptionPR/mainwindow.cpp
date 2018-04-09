@@ -7,8 +7,8 @@
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonArray>
-#include<QJsonObject>
-#include<QCheckBox>
+#include <QJsonObject>
+#include <QCheckBox>
 #include <QJsonDocument>
 #include <QNetworkReply>
 #include <QTableWidget>
@@ -114,13 +114,16 @@ void MainWindow::afficheLaLivraison()
         QTableWidget *nouvelleTable = new QTableWidget(nbLDC,6  ,this);
         boutonClique->setTableWidget(nouvelleTable);
         //boutonClique->setProperty("adresseTab",QBitArray(nouvelleTable));
+        QCheckBox *validerLivraison = new QCheckBox(nouvelleTable);
+        //validerLivraison->setProperty("coche",)
+        nouvelleTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Valider"));
         nouvelleTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Produit"));
         nouvelleTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Quantité"));
         nouvelleTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Mesure"));
         int ligne=0;
         while(ligne < nbLDC)
         {
-        //    nouvelleTable->setItem(ligne,0,);
+            nouvelleTable->setCellWidget(ligne,0,validerLivraison);
             nouvelleTable->setItem(ligne,1,new QTableWidgetItem(jsArray[ligne].toObject()["lotDescription"].toString()));
             nouvelleTable->setItem(ligne,2,new QTableWidgetItem(jsArray[ligne].toObject()["qte"].toString()));
             nouvelleTable->setItem(ligne,3,new QTableWidgetItem(jsArray[ligne].toObject()["umNom"].toString()));
@@ -193,13 +196,15 @@ void MainWindow::afficherCommandeClient(){
         QTableWidget *nouvelleTable = new QTableWidget(nbLDC,4  ,this);
         boutonClique->setTableWidget(nouvelleTable);
         //boutonClique->setProperty("adresseTab",QBitArray(nouvelleTable));
+        QCheckBox *validerReception = new QCheckBox(nouvelleTable);
+        nouvelleTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Valider"));
         nouvelleTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Produit"));
         nouvelleTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Quantité"));
         nouvelleTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Mesure"));
         int ligne=0;
         while(ligne < nbLDC)
         {
-        //    nouvelleTable->setItem(ligne,0,);
+            nouvelleTable->setCellWidget(ligne,0,validerReception);
             nouvelleTable->setItem(ligne,1,new QTableWidgetItem(jsArray[ligne].toObject()["lotDescription"].toString()));
             nouvelleTable->setItem(ligne,2,new QTableWidgetItem(jsArray[ligne].toObject()["qte"].toString()));
             nouvelleTable->setItem(ligne,3,new QTableWidgetItem(jsArray[ligne].toObject()["umNom"].toString()));
