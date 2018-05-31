@@ -4,6 +4,7 @@
 #define URL3 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/listeDesCdes.php"
 #define URL4 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/consommateurDuJour.php"
 #define URL5 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/produitsDeLaCommande.php"
+#define URL6 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/preparerLDC.php"
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonArray>
@@ -114,7 +115,6 @@ void MainWindow::afficheLaLivraison()
         QTableWidget *nouvelleTable = new QTableWidget(nbLDC,6  ,this);
         boutonClique->setTableWidget(nouvelleTable);
         //boutonClique->setProperty("adresseTab",QBitArray(nouvelleTable));
-        QCheckBox *validerLivraison = new QCheckBox(nouvelleTable);
         //validerLivraison->setProperty("coche",)
         nouvelleTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Valider"));
         nouvelleTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Produit"));
@@ -123,14 +123,20 @@ void MainWindow::afficheLaLivraison()
         int ligne=0;
         while(ligne < nbLDC)
         {
-            nouvelleTable->setCellWidget(ligne,0,validerLivraison);
+            QCheckBox *nouvelleCheckBox=new QCheckBox(nouvelleTable);
+            nouvelleCheckBox->setProperty("lotID",jsArray[ligne].toObject()["lotID"].toString());
+            nouvelleCheckBox->setProperty("cmdID",jsArray[ligne].toObject()["cmdID"].toString());
+            connect(nouvelleCheckBox,SIGNAL(clicked(bool)),this,SLOT(preparedCheckBox(bool)));
+            nouvelleTable->setCellWidget(ligne,0,nouvelleCheckBox );
             nouvelleTable->setItem(ligne,1,new QTableWidgetItem(jsArray[ligne].toObject()["lotDescription"].toString()));
             nouvelleTable->setItem(ligne,2,new QTableWidgetItem(jsArray[ligne].toObject()["qte"].toString()));
             nouvelleTable->setItem(ligne,3,new QTableWidgetItem(jsArray[ligne].toObject()["umNom"].toString()));
             nouvelleTable->setItem(ligne,4,new QTableWidgetItem(jsArray[ligne].toObject()["userPrenom"].toString()));
             nouvelleTable->setItem(ligne,5,new QTableWidgetItem(jsArray[ligne].toObject()["userNom"].toString()));
+
             ligne++;
         }
+
         ui->maVerticalLayout->addWidget(nouvelleTable);
     }
 }
@@ -196,7 +202,6 @@ void MainWindow::afficherCommandeClient(){
         QTableWidget *nouvelleTable = new QTableWidget(nbLDC,4  ,this);
         boutonClique->setTableWidget(nouvelleTable);
         //boutonClique->setProperty("adresseTab",QBitArray(nouvelleTable));
-        QCheckBox *validerReception = new QCheckBox(nouvelleTable);
         nouvelleTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Valider"));
         nouvelleTable->setHorizontalHeaderItem(1, new QTableWidgetItem("Produit"));
         nouvelleTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Quantité"));
@@ -204,15 +209,38 @@ void MainWindow::afficherCommandeClient(){
         int ligne=0;
         while(ligne < nbLDC)
         {
-            nouvelleTable->setCellWidget(ligne,0,validerReception);
+            QCheckBox *nouvelleCheckBox=new QCheckBox(nouvelleTable);
+            connect(nouvelleCheckBox,SIGNAL(clicked(bool)),this,SLOT(preparedCheckBox(bool)));
+            nouvelleTable->setCellWidget(ligne,0,nouvelleCheckBox );
             nouvelleTable->setItem(ligne,1,new QTableWidgetItem(jsArray[ligne].toObject()["lotDescription"].toString()));
             nouvelleTable->setItem(ligne,2,new QTableWidgetItem(jsArray[ligne].toObject()["qte"].toString()));
             nouvelleTable->setItem(ligne,3,new QTableWidgetItem(jsArray[ligne].toObject()["umNom"].toString()));
+
             ligne++;
         }
         ui->maVerticalLayoutClient->addWidget(nouvelleTable);
     }}
+void MainWindow::preparedCheckBox(bool coche)
+{
+    if(coche)
+    {
+        QUrl serviceUrl(URL6);
+        QUrl donnees;
+        QUrlQuery query;
+        query.addQueryItem("numeroLDC", ((QCheckBox*)sender())->property("numeroLDC").toString());
+        donnees.setQuery(query);
+        QByteArray postData(donnees.toString(QUrl::RemoveFragment).remove("?").toLatin1());
+        QNetworkRequest request(serviceUrl);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        reply = myNWM->post(request,postData);
+        connect(reply,SIGNAL(finished()),this,SLOT(rendreCompte()));
+    }
+}
 
+void MainWindow::rendreCompte()
+{
+    qDebug()<<"La Préparation est bien enregistrée";
+}
 
 
 MainWindow::~MainWindow()

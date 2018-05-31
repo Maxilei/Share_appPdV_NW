@@ -24,12 +24,15 @@ private:
     QNetworkReply *reply;
     QNetworkReply *replyClient;
     QJsonArray jsArray;
+
     QNetworkAccessManager * myNWM;
 public slots:
     void afficheLesProducteurs();
     void afficheLaLivraison();
     void afficherLesClients();
     void afficherCommandeClient();
+    void preparedCheckBox(bool coche);
+    void rendreCompte();
 };
 
 #endif // MAINWINDOW_H
