@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLayout>
-#include<QNetworkAccessManager>
-#include<QJsonArray>
+#include <QNetworkAccessManager>
+#include <QJsonArray>
 namespace Ui {
 class MainWindow;
 }
