@@ -13,6 +13,7 @@
 #include <QJsonDocument>
 #include <QNetworkReply>
 #include <QTableWidget>
+#include <QDebug>
 #include "boutonproducteur.h"
 #include "boutonclient.h"
 
@@ -76,6 +77,7 @@ void MainWindow::afficheLesProducteurs()
 
 void MainWindow::afficheLaLivraison()
 {
+    qDebug()<<"void MainWindow::afficheLaLivraison()";
     BoutonProducteur* boutonClique=(BoutonProducteur*) sender();
     bool isOpen = boutonClique->estOuvert();
     if(boutonClique->getTabAdresse() != NULL && boutonClique->getTabAdresse()->isHidden() == true ){
@@ -87,10 +89,9 @@ void MainWindow::afficheLaLivraison()
         boutonClique->getTabAdresse()->hide();
     }}
     if(!isOpen){
-        qDebug()<<"void MainWindow::afficheLaLivraison()";
         QString sonId=boutonClique->getProducteur();
         //la suite
-        qDebug()<<sonId;
+        qDebug()<<"ID producteur : " <<sonId;
         QUrl serviceUrl(URL3);
         QUrl donnees;
         QUrlQuery query;
@@ -109,8 +110,8 @@ void MainWindow::afficheLaLivraison()
         QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
         jsArray=jsonResponse.array();
         int nbLDC=jsArray.count();
-        qDebug()<<nbLDC;
-        qDebug()<<jsArray[0].toObject()["lotDescription"].toString();
+        qDebug()<<"Nombre de LDC : "<<nbLDC;
+        qDebug()<<"La LDC : "<<jsArray[0].toObject()["lotDescription"].toString();
 
         QTableWidget *nouvelleTable = new QTableWidget(nbLDC,6  ,this);
         boutonClique->setTableWidget(nouvelleTable);
