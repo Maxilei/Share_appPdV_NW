@@ -16,8 +16,8 @@ if(isset($_SESSION['login']))
             INNER JOIN utilisateur 
                 ON consommateur.utilisateurID = utilisateur.utilisateurID
         WHERE userRole = 'Cons'
-            AND cmdDateLivraison='2018-03-27'
             AND pointRelais.prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')";
+//AND cmdDate='2018-03-27'
 //AND cmdDateLivraison=(SELECT DATE_ADD(curdate(), INTERVAL 1 DAY) AS Tomorrow)
 
 	$res=mysqli_query($base,$req);
