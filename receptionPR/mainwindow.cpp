@@ -4,7 +4,7 @@
 #define URL3 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/listeDesCdes.php"
 #define URL4 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/consommateurDuJour.php"
 #define URL5 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/produitsDeLaCommande.php"
-#define URL6 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/preparerLDC.php"
+#define URL6 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/changementDeStatus.php"
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonArray>
@@ -210,6 +210,8 @@ void MainWindow::afficherCommandeClient(){
         while(ligne < nbLDC)
         {
             QCheckBox *nouvelleCheckBox=new QCheckBox(nouvelleTable);
+            nouvelleCheckBox->setProperty("lotID",jsArray[ligne].toObject()["lotID"].toString());
+            nouvelleCheckBox->setProperty("cmdID",jsArray[ligne].toObject()["cmdID"].toString());
             connect(nouvelleCheckBox,SIGNAL(clicked(bool)),this,SLOT(preparedCheckBox(bool)));
             nouvelleTable->setCellWidget(ligne,0,nouvelleCheckBox );
             nouvelleTable->setItem(ligne,1,new QTableWidgetItem(jsArray[ligne].toObject()["lotDescription"].toString()));
@@ -224,6 +226,8 @@ void MainWindow::preparedCheckBox(bool coche)
 {
     if(coche)
     {
+        qDebug()<<((QCheckBox*)sender())->property("lotID").toString();
+        qDebug()<<((QCheckBox*)sender())->property("cmdID").toString();
         QUrl serviceUrl(URL6);
         QUrl donnees;
         QUrlQuery query;
