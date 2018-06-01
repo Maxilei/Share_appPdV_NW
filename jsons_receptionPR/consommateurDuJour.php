@@ -16,10 +16,7 @@ if(isset($_SESSION['login']))
             INNER JOIN utilisateur 
                 ON consommateur.utilisateurID = utilisateur.utilisateurID
         WHERE userRole = 'Cons'
-<<<<<<< HEAD
-=======
             AND cmdDate='2018-03-27'
->>>>>>> 37a779785aa865a5c42d3d00d9595c747d2935ea
             AND pointRelais.prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')";
 //AND cmdDate='2018-03-27'
 //AND cmdDateLivraison=(SELECT DATE_ADD(curdate(), INTERVAL 1 DAY) AS Tomorrow)
