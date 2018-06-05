@@ -6,11 +6,11 @@ if(isset($_SESSION['login']))
     $pointRelaisMail =$_SESSION['login'];
     $lotID =$_POST['lotID'];
     $cmdID =$_POST['cmdID'];
-    //Requete qui ressort les producteurs qui auront une livraison demain
+
 	$resultat=array();
     $req="
     	UPDATE LDC 
-    	SET status = 'Livré au point relais' 
+    	SET status = '3' 
     	WHERE lotID = '.$lotID.' 
     		AND cmdID = '.$cmdID.'
     		AND prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='.$pointRelaisMail.')";

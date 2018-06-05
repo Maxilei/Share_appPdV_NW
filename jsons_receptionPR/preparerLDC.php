@@ -10,7 +10,7 @@ if(isset($_SESSION['login']))
 
 	$lotID=$_POST['lotID'];
 	$cmdID=$_POST['cmdID'];
-	$txtReq="update LDC set status="Livré au point relais" where cmdID=".$cmdID." AND lotID=".$lotID." AND prID=".$prID;
+	$txtReq="update LDC set idStatus="3" where cmdID=".$cmdID." AND lotID=".$lotID." AND prID=".$prID;
 	$res=mysqli_query($base,$txtReq);
     echo "good job!!!";
 }
