@@ -4,7 +4,7 @@
 #define URL3 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/listeDesCdes.php"
 #define URL4 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/consommateurDuJour.php"
 #define URL5 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/produitsDeLaCommande.php"
-#define URL6 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/changementDeStatus.php"
+#define URL6 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/incrementationStatus.php"
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonArray>

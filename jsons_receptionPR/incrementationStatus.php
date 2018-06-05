@@ -10,7 +10,7 @@ if(isset($_SESSION['login']))
 	$resultat=array();
     $req="
     	UPDATE LDC 
-    	SET status = status+1 
+    	SET idStatus = idStatus+1 
     	WHERE lotID = '.$lotID.' 
     		AND cmdID = '.$cmdID.'
     		AND prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')";
