@@ -10,10 +10,10 @@ if(isset($_SESSION['login']))
 	$resultat=array();
     $req="
     	UPDATE LDC 
-    	SET idStatus = idStatus+1 
-    	WHERE lotID = '.$lotID.' 
-    		AND cmdID = '.$cmdID.'
-    		AND prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')";
+        SET idStatus = idStatus+1 
+        WHERE lotID = '".$lotID."' 
+            AND cmdID = '".$cmdID."'
+            AND prID=(SELECT  prID FROM pointRelais INNER JOIN utilisateur ON pointRelais.utilisateurID = utilisateur.utilisateurID WHERE userMail='".$pointRelaisMail."')";
 //AND cmdDateLivraison=(SELECT DATE_ADD(curdate(), INTERVAL 1 DAY) AS Tomorrow)
 	mysqli_query($base,$req);
 
