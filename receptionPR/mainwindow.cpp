@@ -5,6 +5,7 @@
 #define URL4 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/consommateurDuJour.php"
 #define URL5 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/produitsDeLaCommande.php"
 #define URL6 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/incrementationStatus.php"
+#define URL7 "http://172.29.56.5/~miori/NewWorld/Share_appPdV_NW/jsons_receptionPR/decrementationStatus.php"
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonArray>
@@ -224,6 +225,7 @@ void MainWindow::afficherCommandeClient(){
     }}
 void MainWindow::preparedCheckBox(bool coche)
 {
+    qDebug()<<"void MainWindow::preparedCheckBox(bool coche)";
     if(coche)
     {
         qDebug()<<((QCheckBox*)sender())->property("lotID").toString();
@@ -235,10 +237,29 @@ void MainWindow::preparedCheckBox(bool coche)
         query.addQueryItem("cmdID", ((QCheckBox*)sender())->property("cmdID").toString());
         donnees.setQuery(query);
         QByteArray postData(donnees.toString(QUrl::RemoveFragment).remove("?").toLatin1());
+        qDebug()<<postData;
         QNetworkRequest request(serviceUrl);
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
         reply = myNWM->post(request,postData);
+        qDebug()<<"hello"<<reply->readLine();
         connect(reply,SIGNAL(finished()),this,SLOT(rendreCompte()));
+    }
+    else
+    {
+        qDebug()<<((QCheckBox*)sender())->property("lotID").toString();
+        qDebug()<<((QCheckBox*)sender())->property("cmdID").toString();
+        QUrl serviceUrl(URL7);
+        QUrl donnees;
+        QUrlQuery query;
+        query.addQueryItem("lotID", ((QCheckBox*)sender())->property("lotID").toString());
+        query.addQueryItem("cmdID", ((QCheckBox*)sender())->property("cmdID").toString());
+        donnees.setQuery(query);
+        QByteArray postData(donnees.toString(QUrl::RemoveFragment).remove("?").toLatin1());
+        qDebug()<<postData;
+        QNetworkRequest request(serviceUrl);
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        reply = myNWM->post(request,postData);
+        qDebug()<<"hello"<<reply->readLine();
     }
 }
 
